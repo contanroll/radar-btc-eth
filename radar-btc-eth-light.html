@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Radar BTC & ETH — Tendencias (Light)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #666666;
+      --accent: #0b5fff;
+      --card: #f6f8fb;
+      --border: #e6e8ee;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--fg);
+      background: var(--bg);
+    }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: saturate(1.2) blur(8px);
+      background: rgba(255,255,255,0.88);
+      border-bottom: 1px solid var(--border);
+    }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 16px; }
+    h1 { font-size: 22px; margin: 0 0 6px }
+    .sub { color: var(--muted); font-size: 13px }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 1200px) {
+      .grid { grid-template-columns: 1.35fr 1fr; }
+    }
+    section.card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    section h2 {
+      font-size: 16px; margin: 0 0 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .row { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 800px) {
+      .row { grid-template-columns: 1fr 1fr; }
+    }
+    .links a {
+      display: inline-block;
+      margin: 6px 8px 0 0;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--fg);
+      background: #fff;
+      font-size: 13px;
+    }
+    .links a:hover { border-color: var(--accent); }
+    footer {
+      color: var(--muted);
+      font-size: 12px;
+      padding: 24px 0 40px;
+      text-align: center;
+    }
+    .hint {
+      background: #fff;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Radar de Tendencias — Bitcoin & Ethereum</h1>
+      <div class="sub">Modo claro • Gráficos en vivo + enlaces on‑chain + noticias</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h2>🧭 Ticker en vivo</h2>
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+        {
+          "symbols": [
+            { "proName": "BITSTAMP:BTCUSD", "title": "BTC/USD" },
+            { "proName": "BITSTAMP:ETHUSD", "title": "ETH/USD" },
+            { "proName": "BINANCE:BTCUSDT", "title": "BTC/USDT" },
+            { "proName": "BINANCE:ETHUSDT", "title": "ETH/USDT" }
+          ],
+          "showSymbolLogo": true,
+          "isTransparent": false,
+          "displayMode": "adaptive",
+          "colorTheme": "light",
+          "locale": "es"
+        }
+        </script>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2>📈 Gráfico avanzado — BTC/USD</h2>
+        <div id="tv-btc" style="height: 520px;"></div>
+      </section>
+
+      <section class="card">
+        <h2>📉 Gráfico avanzado — ETH/USD</h2>
+        <div id="tv-eth" style="height: 520px;"></div>
+      </section>
+    </div>
+
+    <section class="card">
+      <h2>🔍 On‑chain clave (flujo hacia/desde exchanges)</h2>
+      <div class="links">
+        <a target="_blank" href="https://studio.glassnode.com/metrics?a=BTC&m=transactions.TransfersVolumeExchangesNet">BTC — Net Transfer Volume (Exchanges)</a>
+        <a target="_blank" href="https://studio.glassnode.com/metrics?a=ETH&m=transactions.TransfersVolumeExchangesNet">ETH — Net Transfer Volume (Exchanges)</a>
+        <a target="_blank" href="https://whale-alert.io/">Whale Alert (en vivo)</a>
+        <a target="_blank" href="https://coinglass.com/Balance">Balances de Exchanges (Coinglass)</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🗞️ Noticias cripto</h2>
+      <div class="links">
+        <a target="_blank" href="https://www.coindesk.com/tag/bitcoin/">CoinDesk — Bitcoin</a>
+        <a target="_blank" href="https://www.coindesk.com/tag/ethereum/">CoinDesk — Ethereum</a>
+        <a target="_blank" href="https://www.theblock.co/linked/bitcoin">The Block — Bitcoin</a>
+        <a target="_blank" href="https://www.theblock.co/linked/ethereum">The Block — Ethereum</a>
+      </div>
+    </section>
+  </main>
+
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script>
+    new TradingView.widget({
+      "autosize": true,
+      "symbol": "BITSTAMP:BTCUSD",
+      "interval": "60",
+      "timezone": "Etc/UTC",
+      "theme": "light",
+      "style": "1",
+      "locale": "es",
+      "toolbar_bg": "#f1f3f6",
+      "enable_publishing": false,
+      "allow_symbol_change": true,
+      "studies": ["RSI@tv-basicstudies","MACD@tv-basicstudies","Volume@tv-basicstudies"],
+      "container_id": "tv-btc"
+    });
+
+    new TradingView.widget({
+      "autosize": true,
+      "symbol": "BITSTAMP:ETHUSD",
+      "interval": "60",
+      "timezone": "Etc/UTC",
+      "theme": "light",
+      "style": "1",
+      "locale": "es",
+      "toolbar_bg": "#f1f3f6",
+      "enable_publishing": false,
+      "allow_symbol_change": true,
+      "studies": ["RSI@tv-basicstudies","MACD@tv-basicstudies","Volume@tv-basicstudies"],
+      "container_id": "tv-eth"
+    });
+  </script>
+</body>
+</html>
